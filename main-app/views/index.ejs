@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h1><%= title %></h1>
+    <p>Welcome to <%= title %></p>
+
+    <div id="messageBoard">
+      dwa
+    </div>
+    <input type="text" id="messageInput">
+
+    <button id="pingButton">Ping Main</button>
+
+
+
+    <script>
+      window.onload = function main(event){
+        console.log(event);
+
+
+
+        var pingButton = document.querySelector('#pingButton');
+        var messageInput = document.querySelector('#messageInput');
+        var messageBoard = document.querySelector('#messageBoard');
+
+
+
+        console.log(pingButton, messageBoard, messageInput);
+
+
+        pingButton.onclick = event => {
+          let text = messageInput.value;
+          sendMessage(text);
+        }
+
+        sendMessage = text => {
+          window.parent.postMessage('ping','*')
+        }
+      }
+
+      const respondToPing = message => {
+        messageBoard.innerText = `${JSON.stringify(message)} ${new Date()}`;
+      }
+      window.addEventListener('message', respondToPing);
+
+
+    </script>
+    
+  </body>
+</html>
